@@ -3,7 +3,7 @@ import { Breadcrumbs, useTheme } from "@geist-ui/react";
 import Controls from './Controls';
 import Link from 'next/link';
 import { ReactElement } from "react";
-import StreamdotaIcon from './StreamdotaIcon';
+import StreamdotaIcon from './Icon.svg';
 import UserRow from "../data/user/UserRow";
 
 export default function MenuLinks(): ReactElement {
@@ -21,7 +21,7 @@ export default function MenuLinks(): ReactElement {
         </div>
       </Breadcrumbs.Item>
       <Breadcrumbs.Item>
-        <UserRow />
+        <UserRow withAccountSwitch />
       </Breadcrumbs.Item>
     </Breadcrumbs>
 
@@ -40,9 +40,9 @@ export default function MenuLinks(): ReactElement {
         justify-content: space-between;
         padding: 0 ${theme.layout.gap};
 
-        & :global(svg) {
-          width: 27px;
-          height: 19px;
+        & :global(.Icon_svg__streamdota-icon) {
+          width: 36px;
+          height: 23px;
         }
       }
 
