@@ -49,8 +49,8 @@ function useChatListenerData(): {
   useEffect(() => {
     if (messages.length > 0) {
       setStoredMessages(JSON.stringify(messages.slice(0, 50)))
-      const newUsers = new Set(messages.map(({ name }) => name));
-      setUsers([...users.split(','), ...newUsers.values()].join(','));
+      const newUsers = new Set([...users.split(','), ...messages.map(({ name }) => name)]);
+      setUsers([...newUsers.values()].join(','));
     }
   }, [messages]);
 
