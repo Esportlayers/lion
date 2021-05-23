@@ -50,7 +50,7 @@ function useChatListenerData(): {
     if (messages.length > 0) {
       setStoredMessages(JSON.stringify(messages.slice(0, 50)))
       const newUsers = new Set([...users.split(','), ...messages.map(({ name }) => name)]);
-      setUsers([...newUsers.values()].join(','));
+      setUsers([...newUsers.values()].filter(Boolean).join(','));
     }
   }, [messages]);
 
