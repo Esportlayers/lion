@@ -1,13 +1,20 @@
 import { Button, Popover, useTheme } from '@geist-ui/react';
+import { ReactElement, useState } from 'react';
 
 import AccountSwitch from './AccountSwitch';
 import { ChevronUpDown } from '@geist-ui/react-icons'
-import { ReactElement } from 'react';
 
 export default function AccountToggle(): ReactElement {
+  const [visible, setVisible] = useState(false);
   const theme = useTheme();
 
-  return <Popover content={<AccountSwitch />} placement="bottomEnd" portalClassName="accountSwitchPopover">
+  return <Popover
+    content={<AccountSwitch onSelect={() => setVisible(false)} />}
+    placement="bottomEnd"
+    portalClassName="accountSwitchPopover"
+    visible={visible}
+    onVisibleChange={setVisible}
+  >
     <Button iconRight={<ChevronUpDown />} auto size="small" className="accountSwitchButton" />
 
     <style jsx global>{`

@@ -9,8 +9,7 @@ export default function useRequireAuth(): void {
       !localStorage.getItem("jwt") ||
       localStorage.getItem("jwt").length === 0
     ) {
-      console.log(location.origin + "/api/twitchAuth");
-      location.href = `${BASE_API_URL}/auth/twitch?callbackURL=${
+      location.href = `${BASE_API_URL}/auth/twitchNew?callbackURL=${
         location.origin + "/api/twitchAuth"
       }`;
     }

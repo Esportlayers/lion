@@ -7,10 +7,17 @@ export const fetcher = (
   const uri = BASE_API_URL + path;
   const options = {
     headers: {
+      "Content-Type": "application/json",
       Authorization: `JWT ${localStorage.getItem("jwt")}`,
       ...(init.headers ?? {}),
     },
     ...init,
   };
-  return fetch(uri, options).then((res) => res.json());
+  return fetch(uri, options).then((res) => {
+    if (res.status === 200) {
+      return res.json();
+    }
+
+    return true;
+  });
 };

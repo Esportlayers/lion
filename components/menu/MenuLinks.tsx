@@ -1,13 +1,16 @@
-import { Breadcrumbs, useTheme } from "@geist-ui/react";
+import { Breadcrumbs, User, useTheme } from "@geist-ui/react";
 
+import AccountToggle from "../data/user/AccountToggle";
+import { BASE_API_URL } from "@/modules/streamdotaAPI";
 import Controls from './Controls';
 import Link from 'next/link';
 import { ReactElement } from "react";
 import StreamdotaIcon from './Icon.svg';
-import UserRow from "../data/user/UserRow";
+import { useCurrentScope } from "@/hooks/data/useScopes";
 
 export default function MenuLinks(): ReactElement {
   const theme = useTheme();
+  const scope = useCurrentScope();
 
   return <nav>
     <Breadcrumbs size={'large'}>
@@ -21,7 +24,10 @@ export default function MenuLinks(): ReactElement {
         </div>
       </Breadcrumbs.Item>
       <Breadcrumbs.Item>
-        <UserRow withAccountSwitch />
+        <div>
+          <User src={BASE_API_URL + scope.src} name={scope.name} />
+          <AccountToggle />
+        </div>
       </Breadcrumbs.Item>
     </Breadcrumbs>
 
