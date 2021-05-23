@@ -34,7 +34,7 @@ function useChatListenerData(): {
   queueSize: number;
   users: string;
 } {
-  const [users, setUsers] = useLocalStorageState<string>('chatListenerUsers', '[]');
+  const [users, setUsers] = useLocalStorageState<string>('chatListenerUsers', '');
   const [storedMessages, setStoredMessages] = useLocalStorageState<string>('chatListener', '[]');
   const [messages, setMessages] = useState<MessageValue[]>([]);
   const [onHold, setOnHold] = useState(false);
@@ -49,8 +49,8 @@ function useChatListenerData(): {
   useEffect(() => {
     if (messages.length > 0) {
       setStoredMessages(JSON.stringify(messages.slice(0, 50)))
-      const users = new Set(messages.map(({ name }) => name));
-      setUsers([...users.values()].join(','));
+      const newUsers = new Set(messages.map(({ name }) => name));
+      setUsers([...users.split(','), ...newUsers.values()].join(','));
     }
   }, [messages]);
 
