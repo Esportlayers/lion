@@ -18,7 +18,7 @@ export default function ChatMessageAction(_actions, rowData): ReactElement {
       );
       setLoading(true);
     }
-  }, [loading]);
+  }, [loading, rowData]);
 
   return <Button size={'small'} auto loading={loading} onClick={onShowOverlay}>
     Show
