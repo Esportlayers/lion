@@ -46,7 +46,7 @@ function useChatListenerData(): {
 
   useEffect(() => {
     if (messages.length > 0) {
-      setStoredMessages(JSON.stringify(messages.splice(0, 50)))
+      setStoredMessages(JSON.stringify(messages.slice(0, 50)))
     }
   }, [messages]);
 
