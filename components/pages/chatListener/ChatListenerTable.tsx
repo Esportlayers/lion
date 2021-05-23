@@ -1,4 +1,4 @@
-import { Dot, Spacer, Table, User } from "@geist-ui/react";
+import { Dot, Spacer, Table, Text, User } from "@geist-ui/react";
 import { EventTypes, KeywordMessage, useTetherMessageListener } from "@esportlayers/io";
 import { ReactElement, useCallback, useEffect, useMemo, useState } from "react";
 
@@ -31,8 +31,10 @@ function useChatListenerData(): {
   messages: MessageValue[],
   onHold: boolean;
   setOnHold: (onHold: boolean) => void;
-  queueSize: number
+  queueSize: number;
+  users: string;
 } {
+  const [users, setUsers] = useLocalStorageState<string>('chatListenerUsers', '[]');
   const [storedMessages, setStoredMessages] = useLocalStorageState<string>('chatListener', '[]');
   const [messages, setMessages] = useState<MessageValue[]>([]);
   const [onHold, setOnHold] = useState(false);
@@ -47,6 +49,8 @@ function useChatListenerData(): {
   useEffect(() => {
     if (messages.length > 0) {
       setStoredMessages(JSON.stringify(messages.slice(0, 50)))
+      const users = new Set(messages.map(({ name }) => name));
+      setUsers([...users.values()].join(','));
     }
   }, [messages]);
 
@@ -73,11 +77,11 @@ function useChatListenerData(): {
     }
   }, [onHold, queue])
 
-  return { messages, onHold, setOnHold, queueSize: queue.length };
+  return { messages, onHold, setOnHold, queueSize: queue.length, users };
 }
 
 export default function ChatListenerTable(): ReactElement {
-  const { messages, onHold, setOnHold, queueSize } = useChatListenerData();
+  const { messages, onHold, setOnHold, queueSize, users } = useChatListenerData();
 
   const tableData = useMemo(() => {
     return messages.sort(({ time: a, time: b }) => b - a).map(({ time, name, logo, message }) => ({
@@ -102,5 +106,9 @@ export default function ChatListenerTable(): ReactElement {
         <Table.Column prop="action" label="" width={70} />
       </Table>
     </LoadingContextProvider>
+
+    <Spacer y={2} />
+    <Text h4>Benutzer</Text>
+    {users}
   </div>;
 }
